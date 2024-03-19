@@ -41,4 +41,8 @@ app.get("/one_to_many", (req, res) => {
   user_controller.one_to_many(req, res);
 });
 
+app.get("/many_to_many", (req, res) => {
+  user_controller.many_to_many(req, res);
+});
+
 app.listen(5001, () => console.log("server running"));

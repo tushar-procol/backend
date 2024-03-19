@@ -21,8 +21,11 @@ db.contact = require("./contact")(sequelize, DataTypes);
 db.user = require("./user")(sequelize, DataTypes, Model);
 
 // db.user.hasOne(db.contact);
-db.user.hasMany(db.contact);
-db.contact.belongsTo(db.user);
+// db.user.hasMany(db.contact);
+// db.contact.belongsTo(db.user);
+
+db.user.belongsToMany(db.contact, { through: "user_contacts" });
+db.contact.belongsToMany(db.user, { through: "user_contacts" });
 
 // db.sequelize.sync({ force: true });
 

@@ -107,6 +107,44 @@ const one_to_many = async (req, res) => {
   res.status(200).json({ data });
 };
 
+const many_to_many = async (req, res) => {
+  const User = db.user;
+  const Contact = db.contact;
+
+  // const user_data = { first_name: "Tushar", last_name: "Garg" };
+  // const data = await User.create({ ...user_data });
+
+  // if (data?.dataValues?.id) {
+  //   const contactObj = {
+  //     permanent_address: "Shipra",
+  //     current_address: "Gurgaon",
+  //   };
+  //   const contact = await Contact.create({ ...contactObj });
+  // }
+
+  // const data = await User.findAll({
+  //   attributes: ["first_name", "last_name"],
+  //   include: [
+  //     {
+  //       model: Contact,
+  //       attributes: ["permanent_address", "current_address"],
+  //     },
+  //   ],
+  // });
+
+  const data = await Contact.findAll({
+    attributes: ["permanent_address", "current_address"],
+    include: [
+      {
+        model: User,
+        attributes: ["first_name", "last_name"],
+      },
+    ],
+  });
+
+  res.status(200).json({ data });
+};
+
 module.exports = {
   add_user,
   get_all_users,
@@ -115,4 +153,5 @@ module.exports = {
   update_user,
   one_to_one,
   one_to_many,
+  many_to_many,
 };
