@@ -71,6 +71,42 @@ const one_to_one = async (req, res) => {
   res.status(200).json({ data });
 };
 
+const one_to_many = async (req, res) => {
+  const User = db.user;
+  const Contact = db.contact;
+
+  // const contactObj = {
+  //   permanent_address: "Shipra",
+  //   current_address: "Gurgaon",
+  //   userId: 3,
+  // };
+  // const extraContact = await Contact.create({ ...contactObj });
+
+  const data = await User.findAll({
+    attributes: ["first_name", "last_name"],
+    include: [
+      {
+        model: Contact,
+        attributes: ["permanent_address", "current_address"],
+      },
+    ],
+    where: { id: 3 },
+  });
+
+  // const data = await Contact.findAll({
+  //   attributes: ["permanent_address", "current_address"],
+  //   include: [
+  //     {
+  //       model: User,
+  //       attributes: ["first_name", "last_name"],
+  //     },
+  //   ],
+  //   where: { id: 3 },
+  // });
+
+  res.status(200).json({ data });
+};
+
 module.exports = {
   add_user,
   get_all_users,
@@ -78,4 +114,5 @@ module.exports = {
   delete_user,
   update_user,
   one_to_one,
+  one_to_many,
 };
