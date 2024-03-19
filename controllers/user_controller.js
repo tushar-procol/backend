@@ -145,6 +145,14 @@ const many_to_many = async (req, res) => {
   res.status(200).json({ data });
 };
 
+const loading = async (req, res) => {
+  const User = db.user;
+  const Contact = db.contact;
+
+  const data = await User.findAll({ include: Contact });
+  res.status(200).json({ data });
+};
+
 module.exports = {
   add_user,
   get_all_users,
@@ -154,4 +162,5 @@ module.exports = {
   one_to_one,
   one_to_many,
   many_to_many,
+  loading,
 };
