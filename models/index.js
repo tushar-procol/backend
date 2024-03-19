@@ -3,6 +3,7 @@ const { Sequelize, DataTypes, Model } = require("sequelize");
 const sequelize = new Sequelize("learn_backend", "tushargarg", "tushargarg", {
   host: "localhost",
   dialect: "postgres",
+  logging: false,
 });
 
 try {

@@ -20,7 +20,5 @@ module.exports = (sequelize, DataTypes, Model) => {
       modelName: "user", // We need to choose the model name
     }
   );
-
-  // the defined model is the class itself
-  console.log(User === sequelize.models.User); // true
+  return User;
 };
