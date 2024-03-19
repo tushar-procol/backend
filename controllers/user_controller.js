@@ -39,10 +39,43 @@ const update_user = async (req, res) => {
   res.status(200).send("updated");
 };
 
+// wrap all await statements inside try catch block to do error handling
+
+const one_to_one = async (req, res) => {
+  const User = db.user;
+  const Contact = db.contact;
+
+  // const data = { first_name: "Tushar One to one 2.0" };
+  // const user = await User.create({ ...data });
+
+  // console.log(user);
+
+  // if (user?.dataValues?.id) {
+  //   const contactObj = {
+  //     permanent_address: "Shipra",
+  //     current_address: "Gurgaon",
+  //     userId: user.dataValues.id,
+  //   };
+
+  //   const contact = await Contact.create({ ...contactObj });
+  // }
+
+  const data = await User.findAll({
+    attributes: ["first_name", "last_name"],
+    include: [
+      { model: Contact, attributes: ["permanent_address", "current_address"] },
+    ],
+    where: { id: 3 },
+  });
+
+  res.status(200).json({ data });
+};
+
 module.exports = {
   add_user,
   get_all_users,
   get_one_user,
   delete_user,
   update_user,
+  one_to_one,
 };
